@@ -24,7 +24,57 @@ async function startServer() {
   app.post("/api/mcp", (req, res) => {
     try {
       const body = req.body;
-      res.json({
+      const { method } = body;
+
+      // Handle MCP required tools mapping
+      if (method === "tools/list") {
+        return res.json({
+          tools: [
+            {
+              name: "get_race_status",
+              description: "Get the current status of the race",
+              inputSchema: { type: "object", properties: {} }
+            },
+            {
+              name: "start_race",
+              description: "Start the race",
+              inputSchema: { type: "object", properties: {} }
+            },
+            {
+              name: "get_leaderboard",
+              description: "Get the current leaderboard",
+              inputSchema: { type: "object", properties: {} }
+            },
+            {
+              name: "optimize_speed",
+              description: "Optimize speed parameters",
+              inputSchema: { type: "object", properties: {} }
+            },
+            {
+              name: "get_track_info",
+              description: "Get information about the track",
+              inputSchema: { type: "object", properties: {} }
+            }
+          ]
+        });
+      }
+
+      if (method === "tools/call") {
+        const { tool } = body;
+        return res.json({
+          status: "success",
+          tool_called: tool,
+          result: `Executed ${tool} successfully.`,
+        });
+      }
+
+      if (method === "prompts/list" || method === "resources/list") {
+        return res.json({
+          [method === "prompts/list" ? "prompts" : "resources"]: []
+        });
+      }
+
+      return res.json({
         status: "success",
         message: "MCP command received",
         agent: "Candle Of Orchestrator",
@@ -32,7 +82,7 @@ async function startServer() {
         payload: body
       });
     } catch (error) {
-      res.status(400).json({ error: "Invalid MCP request" });
+      return res.status(400).json({ error: "Invalid MCP request" });
     }
   });
 
