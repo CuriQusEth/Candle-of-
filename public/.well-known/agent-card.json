@@ -36,6 +36,13 @@
     "ritual-automation",
     "mcp-command-execution"
   ],
+  "skills": [
+    "get_race_status",
+    "start_race",
+    "get_leaderboard",
+    "optimize_speed",
+    "get_track_info"
+  ],
   "supportedChains": ["eip155:8453"],
   "active": true,
   "status": "online"
