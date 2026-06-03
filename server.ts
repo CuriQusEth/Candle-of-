@@ -26,62 +26,107 @@ async function startServer() {
   app.post("/api/mcp", (req, res) => {
     try {
       const body = req.body;
-      const { method } = body;
+      const { jsonrpc, method, id, params } = body;
+
+      if (method === "initialize") {
+         return res.json({
+           jsonrpc: jsonrpc || "2.0",
+           id: id,
+           result: {
+             protocolVersion: "2024-11-05",
+             capabilities: {
+               tools: {},
+               prompts: {},
+               resources: {}
+             },
+             serverInfo: {
+               name: "candle-of-orchestrator",
+               version: "1.0.0"
+             }
+           }
+         });
+      }
 
       // Handle MCP required tools mapping
       if (method === "tools/list") {
         return res.json({
-          tools: [
-            {
-              name: "get_race_status",
-              description: "Get the current status of the race",
-              inputSchema: { type: "object", properties: {} }
-            },
-            {
-              name: "start_race",
-              description: "Start the race",
-              inputSchema: { type: "object", properties: {} }
-            },
-            {
-              name: "get_leaderboard",
-              description: "Get the current leaderboard",
-              inputSchema: { type: "object", properties: {} }
-            },
-            {
-              name: "optimize_speed",
-              description: "Optimize speed parameters",
-              inputSchema: { type: "object", properties: {} }
-            },
-            {
-              name: "get_track_info",
-              description: "Get information about the track",
-              inputSchema: { type: "object", properties: {} }
-            }
-          ]
+          jsonrpc: jsonrpc || "2.0",
+          id: id,
+          result: {
+            tools: [
+              {
+                name: "get_race_status",
+                description: "Get the current status of the race",
+                inputSchema: { type: "object", properties: {} }
+              },
+              {
+                name: "start_race",
+                description: "Start the race",
+                inputSchema: { type: "object", properties: {} }
+              },
+              {
+                name: "get_leaderboard",
+                description: "Get the current leaderboard",
+                inputSchema: { type: "object", properties: {} }
+              },
+              {
+                name: "optimize_speed",
+                description: "Optimize speed parameters",
+                inputSchema: { type: "object", properties: {} }
+              },
+              {
+                name: "get_track_info",
+                description: "Get information about the track",
+                inputSchema: { type: "object", properties: {} }
+              }
+            ]
+          }
         });
       }
 
       if (method === "tools/call") {
-        const { tool } = body;
+        const { name } = params || {};
         return res.json({
-          status: "success",
-          tool_called: tool,
-          result: `Executed ${tool} successfully.`,
+          jsonrpc: jsonrpc || "2.0",
+          id: id,
+          result: {
+            content: [
+              {
+                type: "text",
+                text: `Executed ${name || body.tool || 'tool'} successfully.`
+              }
+            ],
+            isError: false
+          }
         });
       }
 
       if (method === "prompts/list" || method === "resources/list") {
         return res.json({
-          [method === "prompts/list" ? "prompts" : "resources"]: []
+          jsonrpc: jsonrpc || "2.0",
+          id: id,
+          result: {
+            [method === "prompts/list" ? "prompts" : "resources"]: []
+          }
+        });
+      }
+      
+      if (method === "ping") {
+        return res.json({
+          jsonrpc: jsonrpc || "2.0",
+          id: id,
+          result: {}
         });
       }
 
       return res.json({
-        status: "success",
-        message: "MCP command received",
-        agent: "Candle Of Orchestrator",
-        receivedAt: new Date().toISOString(),
-        payload: body
+        jsonrpc: jsonrpc || "2.0",
+        id: id,
+        result: {
+          status: "success",
+          message: "MCP command received",
+          payload: body
+        }
       });
     } catch (error) {
       return res.status(400).json({ error: "Invalid MCP request" });
