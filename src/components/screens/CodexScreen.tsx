@@ -3,12 +3,15 @@ import { useGameStore } from '../../store/gameStore';
 import { useState } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
 import { encodeSayGM } from '../../lib/erc8021/attribution';
+import { useSendGMTransaction } from '../../hooks/useSendGMTransaction';
+import { Sun } from 'lucide-react';
 
 export function CodexScreen() {
   const { rememberedSouls } = useGameStore();
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const [txHash, setTxHash] = useState<string | null>(null);
+  const { sendGMTransaction } = useSendGMTransaction();
 
   const handleRecordOnChain = async (soul: any) => {
     if (!address) {
@@ -67,12 +70,23 @@ export function CodexScreen() {
                 </div>
                 <p className="text-xs text-white/50 leading-relaxed italic mb-6">"{soul.story}"</p>
                 
-                <button 
-                  onClick={() => handleRecordOnChain(soul)}
-                  className="w-full sm:w-auto px-4 py-2 border border-[#D4AF37]/50 text-[#D4AF37] uppercase tracking-widest text-[10px] hover:bg-[#D4AF37] hover:text-[#050403] transition-all duration-300"
-                >
-                  Record Memorial On-Chain
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button 
+                    onClick={() => handleRecordOnChain(soul)}
+                    className="w-full sm:w-auto px-4 py-2 border border-[#D4AF37]/50 text-[#D4AF37] uppercase tracking-widest text-[10px] hover:bg-[#D4AF37] hover:text-[#050403] transition-all duration-300"
+                  >
+                    Record Memorial On-Chain
+                  </button>
+                  {isConnected && (
+                    <button 
+                      onClick={sendGMTransaction}
+                      className="px-3 py-2 rounded-lg bg-[#E8A020]/20 hover:bg-[#E8A020]/30 border border-[#E8A020]/40 text-[#E8A020] transition-colors flex items-center justify-center sm:justify-start gap-2 font-['Cinzel'] text-xs font-bold"
+                    >
+                      <Sun size={14} />
+                      Say GM
+                    </button>
+                  )}
+                </div>
               </motion.div>
             ))}
           </div>

@@ -6,9 +6,14 @@ import { CodexScreen } from '../screens/CodexScreen';
 import { ShrineCanvas } from '../canvas/ShrineCanvas';
 import { Navigation } from './Navigation';
 import { WalletConnect } from './WalletConnect';
+import { useAccount } from 'wagmi';
+import { useSendGMTransaction } from '../../hooks/useSendGMTransaction';
+import { Sun } from 'lucide-react';
 
 export function GameLayout() {
   const { screen, memoryShards, rememberedSouls } = useGameStore();
+  const { isConnected } = useAccount();
+  const { sendGMTransaction } = useSendGMTransaction();
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#050403] text-[#e0d8cf] font-serif">
@@ -36,7 +41,16 @@ export function GameLayout() {
             <p className="text-[8px] md:text-[10px] uppercase tracking-widest text-white/40">Keeper of Names • Ritual Stage II</p>
           </div>
         </div>
-        <div className="flex items-center gap-8 pointer-events-auto">
+        <div className="flex items-center gap-4 md:gap-8 pointer-events-auto">
+          {isConnected && (
+            <button 
+              onClick={sendGMTransaction}
+              className="px-3 py-2 rounded-lg bg-[#E8A020]/20 hover:bg-[#E8A020]/30 border border-[#E8A020]/40 text-[#E8A020] transition-colors flex items-center gap-2 font-['Cinzel'] text-xs font-bold"
+            >
+              <Sun size={14} />
+              Say GM
+            </button>
+          )}
           <div className="text-right hidden sm:block">
             <p className="text-[10px] uppercase tracking-widest text-white/40">Shrine Connectivity</p>
             <p className="text-xs font-mono text-[#4ade80]">BASE MAINNET ACTIVE</p>
