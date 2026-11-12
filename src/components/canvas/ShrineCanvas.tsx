@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGameStore, Candle } from '../../store/gameStore';
 
 class Particle {

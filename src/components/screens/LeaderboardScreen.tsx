@@ -25,7 +25,7 @@ export function LeaderboardScreen() {
           <span className="flex-1 max-w-[40px] h-px bg-[#D4AF37]"></span>
         </h2>
         <p className="text-[10px] text-white/40 uppercase tracking-widest mb-8 text-center sm:text-left">
-          The deepest rememberers on the Base Network.
+          The deepest rememberers on Base Denim Mainnet (200ms Canonical Blocks).
         </p>
 
         <div className="space-y-4">
@@ -53,10 +53,10 @@ export function LeaderboardScreen() {
             <p className="text-xs text-white/50 italic mb-4">You have collected {memoryShards} Memory Shards. Burn more candles to rise through the ranks.</p>
             <button 
               onClick={() => {
-                alert("ERC-8004 Trustless Agent Delegated: Attempting on-chain score submission...\n\nTransaction attributed to Builder: bc_ekawyf65");
+                alert("ERC-8004 Trustless Agent Delegated: Attempting on-chain score submission on Base Denim Mainnet (200ms blocks)...\n\nTransaction attributed to Builder: bc_ekawyf65");
               }}
               className="w-full py-4 bg-white/5 border border-white/10 hover:border-[#D4AF37]/50 transition-colors flex flex-col items-center gap-1 group">
-              <span className="text-[10px] uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">Submit Score (Trustless Agent)</span>
+              <span className="text-[10px] uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">Submit Score (Trustless Agent • Base Denim)</span>
               <span className="text-xs uppercase tracking-[0.2em] text-[#D4AF37]">Say GM</span>
             </button>
         </div>

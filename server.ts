@@ -138,6 +138,7 @@ async function startServer() {
     res.json({
       name: "Candle Of Orchestrator",
       status: "active",
+      network: "Base Mainnet (Denim - 200ms canonical blocks)",
       wallet: "0x29536D0bc1004ab274c4F0F59734Ad74D4559b7B",
       platform: "Candle Of",
       version: "1.0.0"

@@ -16,10 +16,10 @@ export function useSendGMTransaction() {
         to: '0xcD0dd3716C5561De47a24949335dF8a8CD8F71a3',
         value: parseEther('0'),
       });
-      alert(`GM sent! Tx Hash: ${hash}`);
+      alert(`☀️ GM sent on Base Denim Mainnet (200ms block)!\nTx Hash: ${hash}\nContract: 0xcD0dd3716C5561De47a24949335dF8a8CD8F71a3`);
     } catch (error) {
       console.error(error);
-      alert('Failed to say GM');
+      alert('Failed to say GM on Base Denim Mainnet');
     }
   };
 

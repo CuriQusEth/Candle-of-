@@ -1,7 +1,5 @@
-import { NextResponse } from 'next/server';
-
 export async function GET() {
-  return NextResponse.json({
+  return Response.json({
     protocol: "MCP",
     version: "1.0.0",
     name: "Candle Of MCP Endpoint",
@@ -29,7 +27,7 @@ export async function POST(req: Request) {
     const { jsonrpc, method, id, params } = body;
 
     if (method === "initialize") {
-       return NextResponse.json({
+       return Response.json({
          jsonrpc: jsonrpc || "2.0",
          id: id,
          result: {
@@ -48,7 +46,7 @@ export async function POST(req: Request) {
     }
 
     if (method === "tools/list") {
-      return NextResponse.json({
+      return Response.json({
         jsonrpc: jsonrpc || "2.0",
         id: id,
         result: {
@@ -85,7 +83,7 @@ export async function POST(req: Request) {
 
     if (method === "tools/call") {
       const { name } = params || {};
-      return NextResponse.json({
+      return Response.json({
         jsonrpc: jsonrpc || "2.0",
         id: id,
         result: {
@@ -101,7 +99,7 @@ export async function POST(req: Request) {
     }
 
     if (method === "prompts/list" || method === "resources/list") {
-      return NextResponse.json({
+      return Response.json({
         jsonrpc: jsonrpc || "2.0",
         id: id,
         result: {
@@ -111,7 +109,7 @@ export async function POST(req: Request) {
     }
 
     if (method === "ping") {
-      return NextResponse.json({
+      return Response.json({
         jsonrpc: jsonrpc || "2.0",
         id: id,
         result: {}
@@ -119,7 +117,7 @@ export async function POST(req: Request) {
     }
 
     // Default MCP Payload Return
-    return NextResponse.json({
+    return Response.json({
       jsonrpc: jsonrpc || "2.0",
       id: id,
       result: {
@@ -131,12 +129,12 @@ export async function POST(req: Request) {
       headers: { 'Access-Control-Allow-Origin': '*' }
     });
   } catch (error) {
-    return NextResponse.json({ error: "Invalid MCP request" }, { status: 400 });
+    return Response.json({ error: "Invalid MCP request" }, { status: 400 });
   }
 }
 
 export async function OPTIONS() {
-  return new NextResponse(null, {
+  return new Response(null, {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',

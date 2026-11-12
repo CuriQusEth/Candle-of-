@@ -52,8 +52,16 @@ export function GameLayout() {
             </button>
           )}
           <div className="text-right hidden sm:block">
-            <p className="text-[10px] uppercase tracking-widest text-white/40">Shrine Connectivity</p>
-            <p className="text-xs font-mono text-[#4ade80]">BASE MAINNET ACTIVE</p>
+            <div className="flex items-center justify-end gap-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75 duration-700"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4ade80]"></span>
+              </span>
+              <p className="text-[10px] uppercase tracking-widest text-white/40">Shrine Connectivity</p>
+            </div>
+            <p className="text-xs font-mono text-[#4ade80] flex items-center justify-end gap-1">
+              BASE DENIM MAINNET <span className="text-[9px] text-[#D4AF37] border border-[#D4AF37]/30 px-1 rounded-sm">200ms</span>
+            </p>
           </div>
           <WalletConnect />
         </div>
